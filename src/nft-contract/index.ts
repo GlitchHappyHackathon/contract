@@ -91,11 +91,16 @@ export class Contract extends NearContract {
 
   @call
   nft_mint_multi({
-    token_ids,
-    receiver_ids,
+    mint_num,
+    // token_ids,
+    receiver,
+    product_id,
     metadata,
     perpetual_royalties,
   }: {
+    mint_num: number;
+    receiver: string;
+    product_id: string;
     token_ids: string[];
     receiver_ids: string[];
     metadata: TokenMetadata[];
@@ -104,12 +109,14 @@ export class Contract extends NearContract {
     // ids : 1,2
     // receiver : a, b
     // a-1, b-2
-    for (let i = 0; i < token_ids.length; i++) {
+    // token_ids = [];
+    const receiver_id: string = receiver;
+    for (let i = 0; i < mint_num; i++) {
       internalMint({
         contract: this,
-        tokenId: token_ids[i],
+        tokenId: product_id + i,
         metadata: metadata[i],
-        receiverId: receiver_ids[i],
+        receiverId: receiver_id,
         perpetualRoyalties: perpetual_royalties,
       });
     }
